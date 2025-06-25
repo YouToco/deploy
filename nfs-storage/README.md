@@ -6,13 +6,14 @@ centos/openeuler/rocky Linux/RHEL：
 
 ```sh
 # mkdir /data/kubernetes -p
-# yum install nfs-utils.x86_64 -y
+# chmod 777 /data/kubernetes
+# yum install nfs-utils -y
 # vim /etc/exports
 /data/kubernetes *(rw,no_root_squash)
 # exportfs -r     #重新载入配置
 # exportfs -s     #显示所有共享目录
 /data/kubernetes  *(sync,wdelay,hide,no_subtree_check,sec=sys,rw,secure,no_root_squash,no_all_squash)
-# systemctl enable nfs-server.service
+# systemctl enable nfs-server.service --now
 ```
 
 # 部署方式
@@ -22,7 +23,7 @@ curl -LO https://ghfast.top/https://github.com/YouToco/deploy/raw/refs/heads/mai
 
 sed -i "s#10.88.0.10#<your_nfs_server_ip>#" nfs-storageclass.yaml
 
-kubectl creat -f nfs-storageclass.yaml
+kubectl create -f nfs-storageclass.yaml
 ```
 
 
